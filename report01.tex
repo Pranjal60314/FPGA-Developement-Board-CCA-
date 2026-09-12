@@ -86,7 +86,7 @@ The work of the power subsystem is to provide stable and low noise rails to all 
 \midrule
 $V_{\text{CC}}$        & FPGA Digital Core Logic        & 1.1\,V (ECP5) / 1.2\,V (ECP5-5G) \\
 $V_{\text{CCAUX}}$     & Auxiliary / Logic Buffers      & 2.5\,V ($\pm 5\%$, ramp $\le 30\,\text{mV}/\mu\text{s}$) \\
-$V_{\text{CCIO[0..8]}}$& I/O Bank Drivers (Banks 0--8)  & Configurable: 1.2\,V, 1.5\,V, 1.8\,V, 2.5\,V, 3.3\,V \\
+$V_{\text{CCIO}}$      & I/O Bank Drivers               & Configurable: 1.2\,V, 1.5\,V, 1.8\,V, 2.5\,V, 3.3\,V \\
 $V_{\text{CCA}}$       & SerDes Analog Core (if used)   & 1.1\,V (ECP5UM) / 1.2\,V (ECP5-5G) \\
 $V_{\text{CCHTX}}$     & SerDes TX Buffers (if used)    & 1.1\,V (ECP5UM) / 1.2\,V (ECP5-5G) \\
 $V_{\text{PERIPH}}$    & External Oscillators / Flash   & 3.3\,V / 2.5\,V depending on component specs \\
@@ -125,7 +125,7 @@ Once these requirements are established, suitable regulator and supporting compo
 
 \subsubsection{Next Steps for the Power Subsystem}
 \begin{itemize}[leftmargin=1cm]
-    \item Establish power sequencing requirements ($V_{\text{CCIO}}$ ramp relative to $V_{\text{CC}}$ and $V_{\text{CCAUX}}$ to ensure clean Power-On Reset).
+    \item Establish power sequencing requirements ($V_{\text{CCIO}}$ ramp relative to $V_{\text{CC}}$ and $V_{\text{CCAUX}}$ to ensure clean Power-On Reset). While it has already been mentioned that the ECP5 requires specific ramp rates however the architecture to provide this is yet to be determined. This will be done by studying the evaluation board and the ECP5 datasheet and taking inspiration from the power sequencing of other similar FPGA devices.
     \item Select regulator ICs based on thermal dissipation, PCB area, and efficiency targets.
 \end{itemize}
 
