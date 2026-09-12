@@ -64,7 +64,7 @@ To support the ECP5 FPGA effectively, the system has been partitioned into six c
 
 The exact implementation of these subsystems will depend on the selected ECP5 device/package, the required peripherals, the available board area, and other project requirements.
 
-The reference architecture studied for initial baseline requirements is the Lattice ECP5-5G Evaluation Board (\texttt{LFE5UM5G-85F-8BG381}), adapted to meet the cost, layer-count, and peripheral constraints of this project. The purpose of studying the evaluation board is not to reproduce the design directly, but to use it as a practical reference for identifying the types of supporting circuits and power domains that may be required. The final board architecture will be adapted according to the requirements and constraints of the present project.
+The reference architecture studied for initial baseline requirements is the Lattice ECP5-5G Evaluation Board, adapted to meet the cost, layer-count, and peripheral constraints of this project. The purpose of studying the evaluation board is not to reproduce the design directly, but to use it as a practical reference for identifying the types of supporting circuits and power domains that may be required. The final board architecture will be adapted according to the requirements and constraints of the present project.
 
 \section{Subsystem Progress Reports}
 
@@ -75,6 +75,8 @@ The reference architecture studied for initial baseline requirements is the Latt
 The power subsystem must provide clean, stable rails across several distinct domains. Rather than choosing discrete regulators immediately, the current method of identifies all power consumption endpoints from device datasheets and works backwards toward source selection, regulator topologies, and filtering networks. At this stage the purpose of the investigation is not to immediately select regulator components, but to identify the general power endpoints and work backwards towards the architecture of the power subsystem.
 
 From the preliminary investigation of the ECP5 requirements and the reference evaluation board, the required electrical domains are categorized in Table~\ref{tab:power_domains}.
+
+The work of the power subsystem is to provide stable and low noise rails to all the different subsytems. TO achieve this the current approach is to identify all the required power end points, determine their electrical requirements, and subsequently work backwards towards the selection of regulators and thus a complete power architecture. 
 
 \begin{table}[h]
 \centering
@@ -123,7 +125,6 @@ Once these requirements are established, suitable regulator and supporting compo
 
 \subsubsection{Next Steps for the Power Subsystem}
 \begin{itemize}[leftmargin=1cm]
-    \item Perform static and dynamic current estimations using the Lattice Diamond Power Calculator.
     \item Establish power sequencing requirements ($V_{\text{CCIO}}$ ramp relative to $V_{\text{CC}}$ and $V_{\text{CCAUX}}$ to ensure clean Power-On Reset).
     \item Select regulator ICs based on thermal dissipation, PCB area, and efficiency targets.
 \end{itemize}
