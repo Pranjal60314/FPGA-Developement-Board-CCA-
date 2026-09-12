@@ -7,142 +7,109 @@
 \usepackage{hyperref}
 \usepackage{enumitem}
 
-\title{
-    \textbf{Co-Curricular Activity}\\
-    \large FPGA Development Board\\
-    \vspace{0.3cm}
-    \textbf{Bi-Weekly Progress Report -- 01}
-}
-
-\author{
-    Name: Pranjal\\
-    Student Code: SC25B128\\
-    Branch: Electronics and Communication Engineering\\
-    Batch: 2025\\
-}
-
-\date{\today}
-
 \begin{document}
 
-\maketitle
+\begin{titlepage}
+    \vspace*{2.5cm}
+
+    \begin{center}
+        {\Large \textsc{Co-Curricular Activity}}\\[0.8cm]
+        {\huge \textbf{FPGA Development Board}}\\[0.3cm]
+        {\large \textbf{Lattice ECP5 Hardware Platform}}\\[1.2cm]
+        \rule{0.6\textwidth}{0.8pt}\\[0.6cm]
+        {\LARGE \textbf{Bi-Weekly Progress Report -- 01}}\\[0.6cm]
+        \rule{0.6\textwidth}{0.8pt}
+    \end{center}
+
+    \vfill
+    \begin{center}
+        \begin{minipage}{0.58\textwidth}
+            \center
+            \textbf{\large Project Team}\\[0.25cm]
+            \small
+            \begin{tabular}{r l r}
+                \textbf{Pranjal Pandey}  & (SC25B128) -- \textit{Power Subsystem} \\
+                \textbf{Arnav Kavali}    & (SC25B121) -- \textit{Config \& Programming} \\
+                \textbf{Prashant Rajput} & (SC25B500) -- \textit{PCB Layout \& Mechanical} \\
+            \end{tabular}\\[0.4cm]
+            \rule{\linewidth}{0.4pt}\\[0.2cm]
+            \footnotesize
+            \textbf{Branch:} Electronics and Communication Engineering\\
+            \textbf{Batch:} 2025\\
+            \textbf{Date:} \today
+        \end{minipage}
+    \end{center}
+
+    \vspace*{1cm}
+\end{titlepage}
+
+\newpage
+\pagenumbering{arabic}
 
 \section{Project Objective}
 
-The objective of the project relies on supporting the operation of the ECP5 FPGA device by providing a complete developmenet platform for it. Our current objective is to identify the requirements of the ECP5 module and to design a system level architecture of what  and how we are supposed to achieve that. The project will be developed in a modular manner with each subsystem beign designed independently and then integrated into a complete system.
+The objective of the project is to support the operation of the ECP5 FPGA device by providing a complete development platform for it. Our current objective is to identify the requirements of the ECP5 module and to design a system-level architecture of what needs to be achieved and how. The project will be developed in a modular manner, with each subsystem being designed independently before being integrated into a complete system.
 
-\section{Initial Understanding of the Problem}
+\section{System Architecture Overview}
 
-THe first stage of the problem is to identify what are the major subsystems of an FPGA development board and what are the requirements of each subsystem as well as what does it provide to the overall system. The major subsystems of an FPGA developement board that we identified are as follows:
-
-\begin{enumerate}
-    \item FPGA core and associated power supplies
-    \item FPGA configuration and programming interface
-    \item Clocking and timing circuitry
-    \item User I/O and peripheral interfaces
-    \item Debugging and monitoring facilities
-    \item PCB layout and mechanical considerations
+To support the ECP5 FPGA effectively, the system has been partitioned into six core hardware subsystems:
+\begin{enumerate}[leftmargin=1.5cm]
+    \item Subsystem 1: Power Subsystem
+    \item Subsystem 2: Configuration and Programming Interface
+    \item Subsystem 3: PCB Layout and Mechanical Constraints
+    \item Subsystem 4: Clocking and Timing Network
+    \item Subsystem 5: User I/O and Peripheral Interfaces
+    \item Subsystem 6: Debugging and Telemetry Infrastructure
 \end{enumerate}
 
-The exact implementation of these subsystems will depend on the
-selected ECP5 device/package, required peripherals, available board
-area, and project requirements.
+The exact implementation of these subsystems will depend on the selected ECP5 device/package, the required peripherals, the available board area, and other project requirements.
 
-\section{Work Undertaken: Power Subsystem}
-            Worked on by Pranjal Pandey
+The reference architecture studied for initial baseline requirements is the Lattice ECP5-5G Evaluation Board (\texttt{LFE5UM5G-85F-8BG381}), adapted to meet the cost, layer-count, and peripheral constraints of this project. The purpose of studying the evaluation board is not to reproduce the design directly, but to use it as a practical reference for identifying the types of supporting circuits and power domains that may be required. The final board architecture will be adapted according to the requirements and constraints of the present project.
 
-The investigation of power subsystem requirements is ongoing and will be used to make informed decisions about the regulator selection and overall power architecture. Though the system is dependent on the requirements provided by the the sub systems, I have made a preliminary design investigation based on the Lattice ECP5 evaluation board and the documentation provided.
+\section{Subsystem Progress Reports}
 
-From this preliminary investigation, power requirements have been identified for the following domains:
-\begin{itemize}
-    \item Required FPGA supply domains
-    \item Operating voltage ranges
-    \item I/O bank supply requirements
-    \item Configuration-related supply requirements
-    \item Current requirements and power considerations
-    \item Power-up and supply sequencing requirements
-\end{itemize}
+\subsection{Subsystem 1: Power Subsystem}
+\noindent\textbf{Lead:} Pranjal Pandey (SC25B128)
 
-At this stage the purpose of the investigation is not to immediately select regulator components, but to identify the general power end points and work backwards towards the architecture of the power subsystem.
+\subsubsection{Overview and Design Strategy}
+The power subsystem must provide clean, stable rails across several distinct domains. Rather than choosing discrete regulators immediately, the current method of identifies all power consumption endpoints from device datasheets and works backwards toward source selection, regulator topologies, and filtering networks. At this stage the purpose of the investigation is not to immediately select regulator components, but to identify the general power endpoints and work backwards towards the architecture of the power subsystem.
 
-
-\subsection{Identification of Required Power Domains}
-
-The preliminary power domains identified from the ECP5 documentation
-include the following categories:
+From the preliminary investigation of the ECP5 requirements and the reference evaluation board, the required electrical domains are categorized in Table~\ref{tab:power_domains}.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{ll}
+\begin{tabular}{lp{5.5cm}p{6cm}}
 \toprule
-\textbf{Domain} & \textbf{Purpose} \\
+\textbf{Rail Name} & \textbf{Target Domain} & \textbf{Nominal Voltage \& Specifications} \\
 \midrule
-VCC                  & FPGA core supply           \\
-VCCAUX               & Auxiliary supply           \\
-VCCIOx               & I/O bank supply            \\
-Configuration supply & Configuration/JTAG related \\
-Peripheral rails     & External peripherals       \\
+$V_{\text{CC}}$        & FPGA Digital Core Logic        & 1.1\,V (ECP5) / 1.2\,V (ECP5-5G) \\
+$V_{\text{CCAUX}}$     & Auxiliary / Logic Buffers      & 2.5\,V ($\pm 5\%$, ramp $\le 30\,\text{mV}/\mu\text{s}$) \\
+$V_{\text{CCIO[0..8]}}$& I/O Bank Drivers (Banks 0--8)  & Configurable: 1.2\,V, 1.5\,V, 1.8\,V, 2.5\,V, 3.3\,V \\
+$V_{\text{CCA}}$       & SerDes Analog Core (if used)   & 1.1\,V (ECP5UM) / 1.2\,V (ECP5-5G) \\
+$V_{\text{CCHTX}}$     & SerDes TX Buffers (if used)    & 1.1\,V (ECP5UM) / 1.2\,V (ECP5-5G) \\
+$V_{\text{PERIPH}}$    & External Oscillators / Flash   & 3.3\,V / 2.5\,V depending on component specs \\
 \bottomrule
 \end{tabular}
-\caption{Preliminary power-domain identification}
+\caption{Preliminary power-domain specification and allocation}
+\label{tab:power_domains}
 \end{table}
 
-The exact number of VCCIO rails required will depend on the selected
-FPGA package and the allocation of I/O banks to different interfaces.
+The exact number of $V_{\text{CCIO}}$ rails required will depend on the selected FPGA package and the allocation of I/O banks to different interfaces, making FPGA package selection and I/O planning an important dependency for the final power architecture. Similarly, the external peripheral rail ($V_{\text{PERIPH}}$) will depend on the specific peripherals chosen and will have to wait until peripheral selection is complete.
 
-This makes FPGA package selection and I/O planning an important
-dependency for the final power architecture.
-
-The external peripheral rails will depend on the specific peripherals and thus will have to wait until the peripheral selection is complete.
-
-\subsection{Reference Design Study}
-
-Lattice's ECP5 evaluation board documentation has been used as a
-reference for understanding how a practical ECP5 development platform
-can be constructed.
-
-The purpose of studying the evaluation board is not to reproduce the
-design directly. Instead, it provides a practical reference for
-identifying the types of supporting circuits and power domains that
-may be required.
-
-The evaluation board architecture is being used as a starting point
-for determining:
-
-\begin{itemize}
-    \item Power supply architecture
-    \item FPGA configuration method
-    \item JTAG programming interface
-    \item SPI Flash configuration
-    \item Clocking arrangements
-    \item User I/O
-    \item Debugging facilities
-\end{itemize}
-
-The final board architecture will be adapted according to the
-requirements and constraints of the present project.
-
-\subsection{Preliminary Power Architecture}
-
-The current design approach is to define the required power endpoints
-first and then work backwards to determine how these supplies should
-be generated.
-
-The preliminary chain is:
-
+\subsubsection{Power Distribution Architecture}
+The planned power-delivery pipeline follows a hierarchical tree:
 \begin{center}
-Input Power
-$\rightarrow$
-Power Regulation
-$\rightarrow$
-Required Voltage Rails
-$\rightarrow$
-FPGA / I/O Banks / Peripherals
+External DC Input (e.g., 5\,V USB-C / 12\,V Jack)\\
+$\downarrow$\\
+Primary Switching Step-Down Converters (Buck: 3.3\,V, 2.5\,V, 1.2\,V Core)\\
+$\downarrow$\\
+Secondary Linear Regulation / LDOs (Analog Isolation for SerDes/PLLs)\\
+$\downarrow$\\
+Decoupling Networks \& Ferrite Beads $\rightarrow$ FPGA BGA Balls
 \end{center}
 
 For each required rail, the following parameters will be determined:
-
-\begin{enumerate}
+\begin{enumerate}[leftmargin=1.5cm]
     \item Required voltage
     \item Estimated current requirement
     \item Expected peak/transient requirement
@@ -152,24 +119,19 @@ For each required rail, the following parameters will be determined:
     \item Monitoring and test points
 \end{enumerate}
 
-Once these requirements are established, suitable regulator and
-supporting components can be selected and incorporated into the BOM.
+Once these requirements are established, suitable regulator and supporting components can be selected and incorporated into the BOM.
 
+\subsubsection{Next Steps for the Power Subsystem}
+\begin{itemize}[leftmargin=1cm]
+    \item Perform static and dynamic current estimations using the Lattice Diamond Power Calculator.
+    \item Establish power sequencing requirements ($V_{\text{CCIO}}$ ramp relative to $V_{\text{CC}}$ and $V_{\text{CCAUX}}$ to ensure clean Power-On Reset).
+    \item Select regulator ICs based on thermal dissipation, PCB area, and efficiency targets.
+\end{itemize}
 
 \section{Conclusion}
 
-The first stage of the project has been focused on converting the
-general requirement of developing an ECP5-based FPGA board into a
-set of identifiable engineering problems.
+The first stage of the project has been focused on converting the general requirement of developing an ECP5-based FPGA board into a set of identifiable engineering problems. The power subsystem has been selected as the initial area of detailed work: the current approach is to identify all required power endpoints, determine their electrical requirements, and subsequently work backwards toward regulator selection and a complete power architecture.
 
-The power subsystem has been selected as the initial area of detailed
-work. The current approach is to identify all required power
-endpoints, determine their electrical requirements, and subsequently
-work backwards toward regulator selection and a complete power
-architecture.
-
-Further work will integrate this subsystem with FPGA configuration,
-clocking, I/O, debugging and PCB layout to produce the complete
-development-board design.
+Further work will integrate this subsystem with FPGA configuration, clocking, I/O, debugging, and PCB layout to produce the complete development-board design.
 
 \end{document}
