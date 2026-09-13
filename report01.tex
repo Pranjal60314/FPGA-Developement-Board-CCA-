@@ -6,6 +6,7 @@
 \usepackage{booktabs}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{xcolor}
 
 \begin{document}
 
@@ -69,7 +70,7 @@ The reference architecture studied for initial baseline requirements is the Latt
 \section{Subsystem Progress Reports}
 
 \subsection{Subsystem 1: Power Subsystem}
-\noindent\textbf{Lead:} Pranjal Pandey (SC25B128)
+\noindent\textbf{Lead:} \textit{Pranjal Pandey (SC25B128)}
 
 \subsubsection{Overview and Design Strategy}
 The work of the power subsystem is to provide stable and low noise rails to all the different subsytems. To achieve this the current approach is to identify all the required power end points, determine their electrical requirements, and subsequently work backwards towards the selection of regulators and thus a complete power architecture.  From the preliminary investigation of the ECP5 requirements and the reference evaluation board, the required electrical domains are categorized in Table~\ref{tab:power_domains}.
@@ -124,6 +125,30 @@ Once these requirements are established, suitable regulator and supporting compo
     \item Establish power sequencing requirements ($V_{\text{CCIO}}$ ramp relative to $V_{\text{CC}}$ and $V_{\text{CCAUX}}$ to ensure clean Power-On Reset). While it has already been mentioned that the ECP5 requires specific ramp rates however the architecture to provide this is yet to be determined. This will be done by studying the evaluation board and the ECP5 datasheet and taking inspiration from the power sequencing of other similar FPGA devices.
     \item Select regulator ICs based on thermal dissipation, PCB area, and efficiency targets.
 \end{itemize}
+
+\subsection{Subsystem 2: JTAG and FLASH Configuration}
+\noindent\textbf{Lead:} \textit{Arnav Kavali (SC25B120)}
+\subsubsection{Overview and Design Strategy}
+We need a reliable way to wake up our main chip, the Lattice ECP5, and load its programming (the bitstream) into its memory when it turns on. To do this, our board needs a USB-to-JTAG bridge and an SPI Flash memory chip.
+
+The ECP5 supports both Master SPI (MSPI) and JTAG boot modes. Our main goal here is getting the JTAG interface working so we can test and debug live from a PC, and setting up the SPI Flash so the board can boot up on its own without being plugged into a computer.
+
+
+\subsubsection{Configuration Architecture}
+The proposed configuration pipeline includes:
+\begin{itemize}[leftmargin=1cm]
+    \item \textbf{JTAG Download Interface:} A built-in download controller will be utilized to convert USB to JTAG, allowing the host PC to directly interface with the ECP5 device. This setup allows device programming using \textit{\textbf{to be decided}}.
+    \item \textbf{SPI Flash Memory:} An onboard SPI Flash memory device will store the default bitstream. This ensures the ECP5 can boot automatically upon power-up by reading the bitstream over the SPI bus.
+    \item \textbf{JTAG to MSPI Pass-through:} The host will be able to flash the onboard SPI memory indirectly by piping data through the FTDI bridge and the FPGA's JTAG system  chain.
+\end{itemize}
+
+\subsubsection{Next Steps for JTAG and FLASH}
+\begin{itemize}[leftmargin=1cm]
+    \item To confirm with requirements and finalize FT2232H FTDI chip and map out the USB 2.0 routing.
+    \item Select a compatible SPI Flash memory component with adequate density to hold our custom uncompressed bitstream format.
+    \item Map the specific custom configuration of the 144 (assumed) pins (e.g., PROGRAM, INIT, DONE, and boot-mode select switches) to onboard test points and status LEDs for hardware bring-up.
+\end{itemize}
+
 
 \section{Conclusion}
 
