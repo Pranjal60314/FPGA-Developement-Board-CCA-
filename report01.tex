@@ -72,11 +72,7 @@ The reference architecture studied for initial baseline requirements is the Latt
 \noindent\textbf{Lead:} Pranjal Pandey (SC25B128)
 
 \subsubsection{Overview and Design Strategy}
-The power subsystem must provide clean, stable rails across several distinct domains. Rather than choosing discrete regulators immediately, the current method of identifies all power consumption endpoints from device datasheets and works backwards toward source selection, regulator topologies, and filtering networks. At this stage the purpose of the investigation is not to immediately select regulator components, but to identify the general power endpoints and work backwards towards the architecture of the power subsystem.
-
-From the preliminary investigation of the ECP5 requirements and the reference evaluation board, the required electrical domains are categorized in Table~\ref{tab:power_domains}.
-
-The work of the power subsystem is to provide stable and low noise rails to all the different subsytems. TO achieve this the current approach is to identify all the required power end points, determine their electrical requirements, and subsequently work backwards towards the selection of regulators and thus a complete power architecture. 
+The work of the power subsystem is to provide stable and low noise rails to all the different subsytems. To achieve this the current approach is to identify all the required power end points, determine their electrical requirements, and subsequently work backwards towards the selection of regulators and thus a complete power architecture.  From the preliminary investigation of the ECP5 requirements and the reference evaluation board, the required electrical domains are categorized in Table~\ref{tab:power_domains}.
 
 \begin{table}[h]
 \centering
@@ -87,8 +83,8 @@ The work of the power subsystem is to provide stable and low noise rails to all 
 $V_{\text{CC}}$        & FPGA Digital Core Logic        & 1.1\,V (ECP5) / 1.2\,V (ECP5-5G) \\
 $V_{\text{CCAUX}}$     & Auxiliary / Logic Buffers      & 2.5\,V ($\pm 5\%$, ramp $\le 30\,\text{mV}/\mu\text{s}$) \\
 $V_{\text{CCIO}}$      & I/O Bank Drivers               & Configurable: 1.2\,V, 1.5\,V, 1.8\,V, 2.5\,V, 3.3\,V \\
-$V_{\text{CCA}}$       & SerDes Analog Core (if used)   & 1.1\,V (ECP5UM) / 1.2\,V (ECP5-5G) \\
-$V_{\text{CCHTX}}$     & SerDes TX Buffers (if used)    & 1.1\,V (ECP5UM) / 1.2\,V (ECP5-5G) \\
+$V_{\text{CCA}}$       & SerDes Analog Core (if used)   & 1.1\,V (ECP5) / 1.2\,V (ECP5-5G) \\
+$V_{\text{CCHTX}}$     & SerDes TX Buffers (if used)    & 1.1\,V (ECP5) / 1.2\,V (ECP5-5G) \\
 $V_{\text{PERIPH}}$    & External Oscillators / Flash   & 3.3\,V / 2.5\,V depending on component specs \\
 \bottomrule
 \end{tabular}
@@ -96,7 +92,7 @@ $V_{\text{PERIPH}}$    & External Oscillators / Flash   & 3.3\,V / 2.5\,V depend
 \label{tab:power_domains}
 \end{table}
 
-The exact number of $V_{\text{CCIO}}$ rails required will depend on the selected FPGA package and the allocation of I/O banks to different interfaces, making FPGA package selection and I/O planning an important dependency for the final power architecture. Similarly, the external peripheral rail ($V_{\text{PERIPH}}$) will depend on the specific peripherals chosen and will have to wait until peripheral selection is complete.
+The exact number of $V_{\text{CCIO}}$ rails required along with the voltage levels will depend on the selected FPGA package and the allocation of I/O banks to different interfaces, making FPGA package selection and I/O planning an important dependency for the final power architecture. Similarly, the external peripheral rail ($V_{\text{PERIPH}}$) will depend on the specific peripherals chosen and will have to wait until peripheral selection is complete.
 
 \subsubsection{Power Distribution Architecture}
 The planned power-delivery pipeline follows a hierarchical tree:
