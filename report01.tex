@@ -29,9 +29,12 @@
             \textbf{\large Project Team}\\[0.25cm]
             \small
             \begin{tabular}{r l r}
-                \textbf{Pranjal Pandey}  & (SC25B128) -- \textit{Power Subsystem} \\
-                \textbf{Arnav Kavali}    & (SC25B121) -- \textit{Config \& Programming} \\
-                \textbf{Prashant Rajput} & (SC25B500) -- \textit{PCB Layout \& Mechanical} \\
+                \textbf{Pranjal Pandey}      & (SC25B128) -- \textit{Power Subsystem} \\
+                \textbf{Arnav Kavali}        & (SC25B121) -- \textit{Config \& Programming} \\
+                \textbf{Prashant Rajput}     & (SC25B099) -- \textit{Peripherals \& Interfaces} \\
+                \textbf{Mansav Gaba}         & (SC25B090) -- \textit{PCB Layout} \\
+                \textbf{Aryan Hurmade}       & (SC25B224) -- \textit{PCB Layout} \\
+                \textbf{Supreet Signh Saini} & (SC25B064) -- \textit{PCB Layout} \\
             \end{tabular}\\[0.4cm]
             \rule{\linewidth}{0.4pt}\\[0.2cm]
             \footnotesize
@@ -53,7 +56,7 @@ The objective of the project is to support the operation of the ECP5 FPGA device
 
 \section{System Architecture Overview}
 
-To support the ECP5 FPGA effectively, the system has been partitioned into six core hardware subsystems:
+To support the ECP5 FPGA effectively, the system has been partitioned into six seperate subsystems:
 \begin{enumerate}[leftmargin=1.5cm]
     \item Subsystem 1: Power Subsystem
     \item Subsystem 2: Configuration and Programming Interface
@@ -65,7 +68,7 @@ To support the ECP5 FPGA effectively, the system has been partitioned into six c
 
 The exact implementation of these subsystems will depend on the selected ECP5 device/package, the required peripherals, the available board area, and other project requirements.
 
-The reference architecture studied for initial baseline requirements is the Lattice ECP5-5G Evaluation Board, adapted to meet the cost, layer-count, and peripheral constraints of this project. The purpose of studying the evaluation board is not to reproduce the design directly, but to use it as a practical reference for identifying the types of supporting circuits and power domains that may be required. The final board architecture will be adapted according to the requirements and constraints of the present project.
+The reference architecture studied for initial baseline requirements is the Lattice ECP5-5G Evaluation Board, adapted to meet the peripheral constraints of this project. The purpose of studying the evaluation board is not to reproduce the design directly, but to use it as a practical reference for identifying the types of supporting circuits that may be required. The final board architecture will be adapted according to the requirements and constraints of the present project.
 
 \section{Subsystem Progress Reports}
 
