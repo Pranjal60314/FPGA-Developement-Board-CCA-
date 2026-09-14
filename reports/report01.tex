@@ -124,9 +124,19 @@ For each required rail, the following parameters will be determined:
 Once these requirements are established, suitable regulator and supporting components can be selected and incorporated into the BOM.
 
 \subsubsection{Next Steps for the Power Subsystem}
+
 \begin{itemize}[leftmargin=1cm]
-    \item Establish power sequencing requirements ($V_{\text{CCIO}}$ ramp relative to $V_{\text{CC}}$ and $V_{\text{CCAUX}}$ to ensure clean Power-On Reset). While it has already been mentioned that the ECP5 requires specific ramp rates however the architecture to provide this is yet to be determined. This will be done by studying the evaluation board and the ECP5 datasheet and taking inspiration from the power sequencing of other similar FPGA devices.
-    \item Select regulator ICs based on thermal dissipation, PCB area, and efficienc targets. Currently the plan is to evaluate the ICs already being used in the reference evaluation board and identify weather they are the optimal solution for our design. If not we will be looking for alternatives.
+
+    \item Determine the complete power sequencing requirements of the ECP5, including the required ramp rates and the relative sequencing of $V_{\text{CC}}$, $V_{\text{CCAUX}}$, and $V_{\text{CCIO}}$. The ECP5 datasheet and the power architecture of the reference evaluation board will be studied to determine a suitable implementation.
+
+    \item Estimate the current requirements for each power rail, including expected operating and transient requirements, and use these values to determine suitable regulator specifications.
+
+    \item Evaluate the regulator ICs used in the reference evaluation board and compare them with alternative regulators based on efficiency, current capability, thermal performance, availability, and PCB area. Suitable devices will then be shortlisted for the proposed board.
+
+    \item Finalize the power distribution architecture, including the selection of switching regulators, LDOs where required, filtering, decoupling, and power monitoring/test points.
+
+    \item Define the peripheral power requirements once the peripheral and interface selection is finalized. The power architecture will be kept sufficiently flexible to accommodate the required peripheral supply voltages and current requirements.
+
 \end{itemize}
 
 \subsection{Subsystem 2: JTAG and FLASH Configuration}
