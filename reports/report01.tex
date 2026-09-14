@@ -126,7 +126,7 @@ Once these requirements are established, suitable regulator and supporting compo
 \subsubsection{Next Steps for the Power Subsystem}
 \begin{itemize}[leftmargin=1cm]
     \item Establish power sequencing requirements ($V_{\text{CCIO}}$ ramp relative to $V_{\text{CC}}$ and $V_{\text{CCAUX}}$ to ensure clean Power-On Reset). While it has already been mentioned that the ECP5 requires specific ramp rates however the architecture to provide this is yet to be determined. This will be done by studying the evaluation board and the ECP5 datasheet and taking inspiration from the power sequencing of other similar FPGA devices.
-    \item Select regulator ICs based on thermal dissipation, PCB area, and efficiency targets.
+    \item Select regulator ICs based on thermal dissipation, PCB area, and efficienc targets. Currently the plan is to evaluate the ICs already being used in the reference evaluation board and identify weather they are the optimal solution for our design. If not we will be looking for alternatives.
 \end{itemize}
 
 \subsection{Subsystem 2: JTAG and FLASH Configuration}
